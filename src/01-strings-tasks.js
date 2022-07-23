@@ -206,17 +206,35 @@ function extractEmails( str ) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString( width, height ) {
+ function getRectangleString( width, height ) {
+  throw new Error('Not implemented');
   let res = '';
   
   for (let j = 0; j < height; j++) {
     for (let i = 0; i < width; i++) {
-      res+=' ';
-    }
-    res+='\n';
+      if (j === 0 && i === 0) {
+        res+='┌'
+      }
+      if (i === 0 && j !== 0 && j !== height-1) {
+        res+='│\n'
+      }
+      if ((j === 0 && i !== 0 && i!== width-1)|| j === height-1 && i !== 0 && i!== width-1 ) {
+        res+='─'
+      }
+      if (j === 0 && i === width-1) {
+        res+='┐\n'
+      }
+      if (j === height-1 && i === 0) {
+        res+='└'
+      }
+      if (j === height-1 && i === width-1) {
+        res+='┘'
+      } 
+      if (j !== 0 && i !== 0) {res+=' '};
+    };
   }
   return res;
-}
+ }
 
 
 /**
@@ -235,8 +253,28 @@ function getRectangleString( width, height ) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+ function encodeToRot13( str ) {
+  let nStr = '';
+  const alph = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  let alphBig = alph.map((letter) => letter.toUpperCase());
+  for (let i = 0; i < str.length; i++) {
+    if (str[i].match(/[a-z]/g)) {
+      let ind = alph.indexOf(str[i]);
+      let nInd = ind + 13;
+      if (nInd >= alph.length) {
+        nInd = nInd - alph.length;
+      }
+      nStr += alph[nInd];
+    } else if (str[i].match(/[A-Z]/g)) {
+      let ind = alphBig.indexOf(str[i]);
+      let nInd = ind + 13;
+      if (nInd >= alphBig.length) {
+        nInd = nInd - alphBig.length;
+      }
+      nStr += alphBig[nInd];
+    } else nStr += str[i];
+  }
+  return nStr;
 }
 
 /**
@@ -252,8 +290,10 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+ function isString(value) {
+  if (value instanceof String || typeof value === "string") {
+    return true;
+  } else return false;
 }
 
 
@@ -281,9 +321,17 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
-}
+ function getCardId( value ) {
+  const cards = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
+    'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
+    'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
+    'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'];
+  for (let i = 0; i < cards.length; i++) {
+     if (value === cards[i]) {
+         return i;
+     }
+  }
+ }
 
 
 module.exports = {
