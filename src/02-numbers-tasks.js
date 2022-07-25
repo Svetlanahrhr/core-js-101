@@ -201,12 +201,13 @@ function isPrime(n) {
   if (n <= 1) {
     return false;
   }
-  for (let i = 2; i <= Math.sqrt(n); i++) {
+  for (let i = 2; i <= Math.sqrt(n); i += 1) {
     if (n % i === 0) return false;
   }
   if (n % 1 === 0 && n % n === 0) {
     return true;
   }
+  return n;
 }
 
 /**
@@ -224,7 +225,7 @@ function isPrime(n) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber( value, def ) {
+function toNumber(value, def) {
   return Number.isInteger(+value) ? +value : def;
 }
 
