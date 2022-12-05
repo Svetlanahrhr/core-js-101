@@ -96,8 +96,11 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  if (a < b + c && b < a + c && c < a + b) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -132,8 +135,15 @@ function isTriangle(/* a, b, c */) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  const rightBottomPointX = rect1.top + rect1.height;
+  const rightBottomPointY = rect1.left + rect1.width;
+  if (
+    rightBottomPointX > rect2.top && rightBottomPointY > rect2.left
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
